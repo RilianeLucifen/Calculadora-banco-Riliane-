@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riliane Banco de México</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .calculator {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 500px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .action-link {
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      background-color: #2980b9;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .action-link:hover {
+      background-color: #1e6694;
+    }
+  </style>
+</head>
+<body>
+  <h1>Riliane Banco de México</h1>
+
+  <div class="calculator">
+    <h2>Calculadora de Depósitos</h2>
+    <label for="depositAmount">Cantidad (kkk):</label>
+    <input type="number" id="depositAmount" placeholder="Ej. 1000" step="0.01">
+
+    <label for="depositInterest">Interés (%):</label>
+    <input type="number" id="depositInterest" placeholder="Ej. 2" step="0.01">
+
+    <div class="result" id="depositResult"></div>
+    <a class="action-link" href="https://t.me/+M0UF94aLbTowNTZh" target="_blank">¡Ya estás listo para hacer tu depósito! Haz clic aquí</a>
+  </div>
+
+  <div class="calculator">
+    <h2>Calculadora de Préstamos</h2>
+    <label for="loanAmount">Cantidad solicitada (kkk):</label>
+    <input type="number" id="loanAmount" placeholder="Ej. 1000" step="0.01">
+
+    <label for="loanWeeks">Semanas:</label>
+    <input type="number" id="loanWeeks" placeholder="Ej. 10" step="1">
+
+    <label for="loanInterest">Interés semanal (%):</label>
+    <input type="number" id="loanInterest" placeholder="Ej. 2" step="0.01">
+
+    <div class="result" id="loanWeeklyPayment"></div>
+    <div class="result" id="loanTotalPayment"></div>
+    <a class="action-link" href="https://t.me/+M0UF94aLbTowNTZh" target="_blank">¡Ya estás listo para solicitar tu préstamo! Haz clic aquí</a>
+  </div>
+
+  <script>
+    function updateDeposit() {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+      const interest = parseFloat(document.getElementById('depositInterest').value);
+      const result = document.getElementById('depositResult');
+
+      if (!isNaN(amount) && !isNaN(interest)) {
+        const total = amount * (1 + interest / 100);
+        result.textContent = `Total obtenido: ${total.toFixed(2)} kkk`;
+      } else {
+        result.textContent = '';
+      }
+    }
+
+    function updateLoan() {
+      const amount = parseFloat(document.getElementById('loanAmount').value);
+      const weeks = parseInt(document.getElementById('loanWeeks').value);
+      const interest = parseFloat(document.getElementById('loanInterest').value);
+      const weeklyPaymentEl = document.getElementById('loanWeeklyPayment');
+      const totalPaymentEl = document.getElementById('loanTotalPayment');
+
+      if (!isNaN(amount) && !isNaN(weeks) && weeks > 0 && !isNaN(interest)) {
+        const totalToPay = amount * (1 + (interest / 100) * weeks);
+        const weeklyPayment = totalToPay / weeks;
+
+        weeklyPaymentEl.textContent = `Pago semanal: ${weeklyPayment.toFixed(2)} kkk`;
+        totalPaymentEl.textContent = `Total a pagar: ${totalToPay.toFixed(2)} kkk`;
+      } else {
+        weeklyPaymentEl.textContent = '';
+        totalPaymentEl.textContent = '';
+      }
+    }
+
+    // Activar el cálculo en tiempo real
+    document.getElementById('depositAmount').addEventListener('input', updateDeposit);
+    document.getElementById('depositInterest').addEventListener('input', updateDeposit);
+
+    document.getElementById('loanAmount').addEventListener('input', updateLoan);
+    document.getElementById('loanWeeks').addEventListener('input', updateLoan);
+    document.getElementById('loanInterest').addEventListener('input', updateLoan);
+  </script>
+</body>
+</html>
